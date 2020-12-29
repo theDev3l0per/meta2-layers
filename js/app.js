@@ -5,18 +5,18 @@ const D = id => new Decimal(id)
 
 app = Vue.createApp({
   data() {return {
-    generators: [],
+    normalGenerators: [],
     dngCap: D(5),
     pps: D(1)
   }},
   methods: {
     createGenerators() {
       for (var i = D(1); i.lte(this.dngCap); i = i.add(1)) {
-        this.generators.push({number: i.round(), amt: D(0).round()})
+        this.normalGenerators.push({number: i.round(), amt: D(0).round()})
       }
     },
-    cost(x) {
-      return Decimal.pow(10, x).pow(this.generators[x-1].amt.add(1))
+    cost(type, distinct) {
+      return Decimal.pow(10, distinct).pow(this[`${type}Generators`][distinct-1].amt.add(1))
     }
   }
 })

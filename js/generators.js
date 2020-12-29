@@ -2,7 +2,7 @@ app.component("normal-generators", {
   props: ["generators"],
   template: `<div><normal-generator
         v-for="generator in generators"
-        :number="generator.number"
+        :number="generator.number.toString()"
         :amt="generator.amt.toString()"
         :key="generator.number.toString()"
       ></normal-generator></div>`
