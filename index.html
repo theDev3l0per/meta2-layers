@@ -16,11 +16,12 @@
     
     <!-- Html -->
     <div id="app">
-      <normal-generators :generators="generators"></normal-generators>
+      <normal-generators :generators="player.generators"></normal-generators>
     </div>
     
     <!-- Game Scripts -->
+    <script src="js/app.js"></script>
     <script src="js/generators.js"></script>
-    <script>app.mount("#app")</script>
+    <script>init()</script>
   </body>
 </html>

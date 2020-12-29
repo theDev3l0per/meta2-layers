@@ -6,10 +6,22 @@ const D = id => new Decimal(id)
 const app = Vue.createApp({
   el: "#app",
   data() {return {
-    generators: [],
-    dngCap: 5,
     player:{
-      pps: "1"
+      generators: [],
+      dngCap: D(5),
+      pps: D(1)
     }
-  }}
+  }},
+  methods: {
+    createGenerators() {
+      for (var i = D(1); i.lte(this.player.dngCap); i = i.add(1)) {
+        this.player.generators.push({number: i, amt: D(0)})
+      }
+    }
+  }
 })
+
+function init() {
+  app.mount("#app")
+  app.createGenerators()
+}
