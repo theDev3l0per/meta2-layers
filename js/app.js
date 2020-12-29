@@ -7,7 +7,7 @@ function loopAssign(x, y) {
   
     for (var key in y) {
         if (!y.hasOwnProperty(key)) continue;
-        if (typeof y[key] == "object") {
+        if (typeof y[key] == "object" && !(y[key] instanceof Decimal) && !(y[key] instanceof Array)) {
             loopAssign(x[key],y[key])
         }
         else {
@@ -29,9 +29,8 @@ var app = Vue.createApp({
     a: D(10)
     }
     if (typeof localStorage.game != "undefined") x = loopAssign(x, JSON.parse(localStorage.game))
-    else createGenerators()
     return x
-  }},
+  },
   methods: {
     createGenerators() {
       for (var i = D(1); i.lte(this.dngCap); i = i.add(1)) {
@@ -46,6 +45,6 @@ var app = Vue.createApp({
 
 function init() {
   player = app.mount("#app")
-
+  if (typeof localStorage.game == "undefined") player.createGenerators()
   setInterval(save, 10000)
 }
