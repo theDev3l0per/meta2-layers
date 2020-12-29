@@ -1,11 +1,25 @@
 /* CSS files add styling rules to your content */
 
 body {
-  font-family: helvetica, arial, sans-serif;
-  margin: 2em;
+  font-family: "Lucida Console", Monaco, monospace;
+  margin: 1em;
+  background-color: #000000;
+  color: #ffffff;
 }
 
-h1 {
-  font-style: italic;
-  color: #373fff;
+button {
+  font-family: "Lucida Console", Monaco, monospace;
+  font-size: 16px;
+}
+
+.button {
+  background-color: #000000;
+  color: #ffffff;
+  text-align: center;
+  transition-duration: 0.5s;
+}
+
+.button:hover {
+  background-color: #ffffff;
+  color: #000000;
 }
