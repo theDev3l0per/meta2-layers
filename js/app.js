@@ -24,4 +24,6 @@ app = Vue.createApp({
 function init() {
   player = app.mount("#app")
   player.createGenerators()
+  load()
+  setInterval(save, 10000)
 }
