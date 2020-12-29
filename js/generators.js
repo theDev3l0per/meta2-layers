@@ -1,4 +1,7 @@
 Vue.component("normal-generator", {
-  props: ["number"],
-  template: `<h3>Generator {{number}}</h3><br>`
+  props: ["number", "amt"],
+  template: `<button>
+  Generator {{number}}<br>
+  Amount: {{amt}}
+  </button>`
 })
