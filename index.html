@@ -16,11 +16,15 @@
     
     <!-- Html -->
     <div id="app">
-      
+      <normal-generator
+        v-for="generator in generators"
+        :number="generator.number"
+        :key="generator.number"
+      ></normal-generator>
     </div>
     
     <!-- Game Scripts -->
-    <script src="js/app.js"></script>
     <script src="js/generators.js"></script>
+    <script src="js/app.js"></script>
   </body>
 </html>

@@ -6,7 +6,9 @@ const D = id => new Decimal(id)
 const app = new Vue({
   el: "#app",
   data: {
-    player:{}
-  },
-points: "0",
-      pps: "1"})
+    generators:[{number: 1}, {number: 2}, {number: 3}],
+    player:{
+      pps: "1"
+    }
+  }
+})
