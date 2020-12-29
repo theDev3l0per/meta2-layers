@@ -17,10 +17,16 @@ function loopAssign(x, y) {
     return x
 }
 
-function decimalize(x) {
+function decimalize(x) { // imma continue working
   for (var i in x) {
-    
+    if (typeof x[i] == "object") {
+      decimalize(x[i])
+    }
+    else {
+      x[i] = D(x[i])
+    }
   }
+  return x
 }
 
 function save() {
@@ -34,7 +40,7 @@ var app = Vue.createApp({
     dngCap: D(5),
     a: D(10)
     }
-    if (typeof localStorage.game != "undefined") x = loopAssign(x, JSON.parse(localStorage.game))
+    if (typeof localStorage.game != "undefined") x = decimalize(loopAssign(x, JSON.parse(localStorage.game)))
     return x
   },
   methods: {
