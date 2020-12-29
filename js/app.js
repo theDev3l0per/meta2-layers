@@ -17,6 +17,12 @@ function loopAssign(x, y) {
     return x
 }
 
+function decimalize(x) {
+  for (var i in x) {
+    
+  }
+}
+
 function save() {
   localStorage.game = JSON.stringify(player.$data)
 }
