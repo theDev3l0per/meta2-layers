@@ -3,11 +3,34 @@ const c = id => document.getElementsByClassName(id)
 const t = id => document.getElementsByTagName(id)
 const D = id => new Decimal(id)
 
-app = Vue.createApp({
-  data() {return {
+function loopAssign(x, y) {
+  
+    for (var key in y) {
+        if (!y.hasOwnProperty(key)) continue;
+        if (typeof y[key] == "object") {
+            loopAssign(x[key],y[key])
+        }
+        else {
+            x[key] = y[key]
+        }
+    }
+    return x
+}
+
+function save() {
+  localStorage.game = JSON.stringify(player.$data)
+}
+
+var app = Vue.createApp({
+  data() {
+    var x = {
     normalGenerators: [],
     dngCap: D(5),
     a: D(10)
+    }
+    if (typeof localStorage.game != "undefined") x = loopAssign(x, JSON.parse(localStorage.game))
+    else createGenerators()
+    return x
   }},
   methods: {
     createGenerators() {
@@ -23,7 +46,6 @@ app = Vue.createApp({
 
 function init() {
   player = app.mount("#app")
-  player.createGenerators()
-  load()
+
   setInterval(save, 10000)
 }
