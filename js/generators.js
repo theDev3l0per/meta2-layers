@@ -1,15 +1,15 @@
 Vue.component("normal-generators", {
   props: ["generators"],
-  template: `<normal-generator
+  template: `<div><normal-generator
         v-for="generator in generators"
         :number="generator.number"
         :key="generator.number"
-      ></normal-generator>`
+      ></normal-generator></div>`
 })
 
 Vue.component("normal-generator", {
   props: ["number", "amt"],
-  template: `<button>
+  template: `<button style="display:block;">
   Generator {{number}}<br>
   Amount: {{amt}}
   </button>`
