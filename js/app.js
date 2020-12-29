@@ -7,7 +7,7 @@ app = Vue.createApp({
   data() {return {
     normalGenerators: [],
     dngCap: D(5),
-    pps: D(1)
+    a: D(10)
   }},
   methods: {
     createGenerators() {
