@@ -3,12 +3,13 @@ const c = id => document.getElementsByClassName(id)
 const t = id => document.getElementsByTagName(id)
 const D = id => new Decimal(id)
 
-const app = new Vue({
+const app = Vue.createApp({
   el: "#app",
-  data: {
-    generators:[{number: 1}, {number: 2}, {number: 3}, {number: 4}],
+  data() {return {
+    generators: [],
+    dngCap: 5,
     player:{
       pps: "1"
     }
-  }
+  }}
 })
