@@ -36,6 +36,7 @@ function save() {
 var app = Vue.createApp({
   data() {
     var x = {
+    tab: "1",
     normalGenerators: [],
     dngCap: D(5),
     a: D(10)

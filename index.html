@@ -16,10 +16,21 @@
     
     <!-- Html -->
     <div id="app">
-      <h3>
+      <div id="tabs">
+        <button :onclick="tab=1">
+          Main
+        </button>
+        <button :onclick="tab=2">
+          Not Main
+        </button>
+      </div>
+      <div v-if="tab.toString() == '1'">
+        <h3>
         You have <b>{{a.toFixed(2)}}</b>a.
       </h3>
       <normal-generators :generators="normalGenerators" :cost="cost"></normal-generators>
+      </div>
+      
     </div>
     
     

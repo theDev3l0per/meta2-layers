@@ -18,7 +18,7 @@ app.component("normal-generator", {
     amt: String,
     cost: String
   },
-  template: `<button style="display:block;" :amt="amt" onclick='player.buy("normal", this.attributes.amt.value)'>
+  template: `<button style="display:block;" :number="number" onclick='player.buy("normal", this.attributes.number.value)'>
   <b>Generator {{number}}</b><br>
   Amount: {{amt}}<br>
   Cost: {{cost}}a
