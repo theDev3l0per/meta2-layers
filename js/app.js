@@ -60,6 +60,9 @@ var app = Vue.createApp({
         this[`${type}Generators`][distinct-1].trueAmt = this[`${type}Generators`][distinct-1].trueAmt.add(1).round()
       }
     },
+    mult(type, distinct) {
+      return Decimal.pow(2, this[`${type}Generators`][distinct-1].trueAmt).round()
+    }
   }
 })
 
@@ -71,11 +74,11 @@ function init() {
 }
 
 function tick() {
-  player.a = player.normalGenerators[0].amt.add(player.normalGenerators[0].trueAmt).div(20).add(player.a)
+  player.a = player.normalGenerators[0].amt.add(player.normalGenerators[0].trueAmt).times(Decimal.pow(2, player.normalGenerators[0].trueAmt)).div(20).add(player.a)
   for (var i in player.normalGenerators) {
     i = Number(i)
     if (D(i).neq(player.dngCap.sub(1))) {
-      player.normalGenerators[i].amt = player.normalGenerators[i+1].amt.add(player.normalGenerators[i+1].trueAmt).div(20).add(player.normalGenerators[i].amt)
+      player.normalGenerators[i].amt = player.normalGenerators[i+1].amt.add(player.normalGenerators[i+1].trueAmt).times(Decimal.pow(2, player.normalGenerators[i+1].trueAmt)).div(20).add(player.normalGenerators[i].amt)
     }
   }
 }
