@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>(Meta^Meta) Layers</title>
+    <title>(Meta^Meta) Layers v1.01</title>
 
     
   </head>
@@ -19,13 +19,16 @@
       <div id="tabs">
         <button onclick="player.tab='1'">Production</button>
         <button onclick="player.tab='2'">Settings</button>
+        <button onclick="player.tab='3'">How to Play</button>
       </div>
       <div v-if="tab.toString() == '1'">
-        <h3>You have <b>{{format(a)}}</b>a.</h3>
-        <button class="nGenDupe" v-if="false">
+        <h1>You have {{format(a)}}a.</h1>
+        <button class="nGenDupe" v-if="canNormalDupe()" onclick="normalDupe()">
           <h3>Generator Duplication</h3>
-          Reset the game but unlock a new generator and all generators and tickspeed gain a 1.1x buff
-        </button>
+          Reset the game, but unlock a new generator and all generators and tickspeed gain a 1.1x buff.
+        </button><p></p>
+        <button style="display:block;" id="maxall" onclick="player.maxAll()">Max All (M)</button>
+        <h4>Your tickspeed multiplier is {{format(tickspeed().times(20))}}.</h4>
         <normal-generators
           :generators="normalGenerators"
           :cost="cost"
@@ -34,16 +37,34 @@
         ></normal-generators>
       </div>
       <div v-if="tab.toString() == '2'">
-        <button onclick="player.dark = !player.dark">
-          Theme
-        </button><br>
-        <b>Credits</b><br>unpingabot for making 99% of the code<br>unp©gged™ for game ideas
-        <h1>Changelog</h1>
-        <h3>v1.00</h3>Created the entire game.
+        <button onclick="player.dark = !player.dark">{{dark ? "Current Theme: Dark" : "Current Theme: Light"}}</button><br>
+        <button onclick="if (window.confirm('are you sure you want to reset')) {localStorage.removeItem('layers'); location.reload();}">Hard Reset</button><br>
+        <h1>Credits</h1>Thanks to unpingabot, for coding about 99% of the game in Vue.
+        <br>Thanks to unp©gged™ for CSS, some HTML, Credits, Changelog, and Ideas.
+        <br>Thanks to Jacorb, for creating the number format for this game.
+        <br>And especially... thanks to <i><b>YOU</b></i>, yes, you, for playing this game!
+        <h1>Changelog</h1>v1.01: Making Generator Duplication (unpingabot). [12/30/2020 | 30/12/2020]
+        <br>v1.00b: Made five generators, with x producing the x-1th generator (unpingabot), and proper number formatting (Jacorb). [12/29/2020 | 29/12/2020]
+        <br>v1.00a: Made the idea document for the game, with three prestige layers (unp©gged™). [Before 12/29/2020 | Before 29/12/2020]
       </div>
-      <link rel="stylesheet" :href="dark ? 'style.css' : 'style1.css'" />
+      <link rel="stylesheet" :href="dark ? 'style.css' : 'style2.css'" />
+      <div v-if="tab.toString() == '3'">
+      <h1>Generators</h1>Generators are a major part of production. The first generator produces <i>a</i>, which is the main currency of this game. You buy generators with <i>a</i>.
+      <br>The second generator produces the first generator. That means even more <i>a</i> is produced. The third generator generates the second generator.
+      <br>Basically, the <i>x-1</i>th producer produces the <i>x</i>th generator. The cost scaling for each generator is (10^[generator #])^[# of generators].
+      <br>That means that the cost for when you have 5 Generator 4s is 1e20a, since the formula for its cost is (10^4)^5. The same is for every other generator.
+      <br>Also, when you buy a generator, its multiplier doubles. Multiplier multiplies the effectiveness of each generator.
+      <h1>Generator Duplication</h1>Generator Duplication is the first <i>prestige layer</i>, or reset, of the game. When you perform it, all previous progress gets reset.
+      <br>However, it's not for nothing. You get a boost to all generator multipliers... and <i>tickspeed</i>. Tickspeed is basically also a multiplier to generator multipliers.
+      <br>Also, you get another <i>distinct generator</i>. A distinct generator is basically the generator #.
+      <br>You start out with five distinct generators. However, each time you reset, you unlock another distinct generator which you can buy.
+      <br>The generator duplication requirement will also increase, though. 
+      <br>The formula for each generator duplication's requirement is <i>x x</i>th generators, where x is the # of distinct generators you have.
     </div>
-    <!-- Nothing past here -->
+      <!-- Nothing past here -->
+    </div>
+    
+    
 
     <!-- Game Scripts -->
     <script src="js/app.js"></script>
