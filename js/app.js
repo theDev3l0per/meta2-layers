@@ -59,7 +59,7 @@ var app = Vue.createApp({
         this.a = this.a.sub(this.cost(type, distinct))
         this[`${type}Generators`][distinct-1].amt = this[`${type}Generators`][distinct-1].amt.add(1).round()
       }
-    }
+    },
   }
 })
 
@@ -67,4 +67,14 @@ function init() {
   player = app.mount("#app")
   if (typeof localStorage.game == "undefined") player.createGenerators()
   setInterval(save, 10000)
+  setInterval(tick, 50)
+}
+
+function tick() {
+  player.a = D(1).div(20).add(player.a)
+  for (var i in player.normalGenerators) {
+    if (D(i).neq(player.dngCap.sub(1))) {
+      player.normalGenerators[i].amt = player.normalGenerators[i+1].amt.div(20).add(player.normalGenerators[i].amt)
+    }
+  }
 }
