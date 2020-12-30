@@ -31,7 +31,7 @@ function decimalize(x) { // imma continue working
 }
 
 function save() {
-  localStorage.layers = JSON.stringify(player.$data)
+  localStorage.layers1 = JSON.stringify(player.$data)
 }
 
 var app = Vue.createApp({
@@ -43,7 +43,7 @@ var app = Vue.createApp({
     normalDupes: D(0),
     a: D(10)
     }
-    if (typeof localStorage.layers != "undefined") x = decimalize(loopAssign(x, JSON.parse(localStorage.layers)))
+    if (typeof localStorage.layers1 != "undefined") x = decimalize(loopAssign(x, JSON.parse(localStorage.layers1)))
     return x
   },
   methods: {
@@ -105,7 +105,7 @@ var app = Vue.createApp({
 
 function init() {
   player = app.mount("#app")
-  if (typeof localStorage.layers == "undefined") player.createGenerators()
+  if (typeof localStorage.layers1 == "undefined") player.createGenerators()
   setInterval(save, 10000)
   setInterval(tick, 50)
   window.addEventListener("keypress",function(keyp){
