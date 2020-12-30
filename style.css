@@ -5,11 +5,13 @@ body {
   margin: 1em;
   background-color: #000000;
   color: #ffffff;
+  text-align: center;
 }
 
 button {
   font-family: "Lucida Console", Monaco, monospace;
   font-size: 16px;
+  margin: auto;
 }
 
 normal-generators {
@@ -17,6 +19,7 @@ normal-generators {
   color: #ffffff;
   text-align: center;
   padding: 20px 50px;
+  margin: auto;
 }
 .button {
   background-color: #000000;
@@ -28,4 +31,10 @@ normal-generators {
 .button:hover {
   background-color: #ffffff;
   color: #000000;
+}
+
+.nGenDupe {
+  width: 70vh;
+  height: 20vh;
+  margin: auto;
 }
