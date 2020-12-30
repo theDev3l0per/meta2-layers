@@ -21,11 +21,12 @@
         <button onclick="player.tab='2'">Settings</button>
       </div>
       <div v-if="tab.toString() == '1'">
-        <h3>You have <b>{{a.toFixed(2)}}</b>a.</h3>
+        <h3>You have <b>{{format(a)}}</b>a.</h3>
         <normal-generators
           :generators="normalGenerators"
           :cost="cost"
           :mult="mult"
+          :format="format"
         ></normal-generators>
       </div>
       <div v-if="tab.toString() == '2'">

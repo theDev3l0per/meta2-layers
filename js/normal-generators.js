@@ -2,16 +2,17 @@ app.component("normal-generators", {
   props: {
     generators: Array,
     cost: Function,
-    mult: Function
+    mult: Function,
+    format: Function
   },
   template: `<div><normal-generator
         v-for="generator in generators"
-        :number="generator.number.round().toString()"
-        :amt="generator.amt.add(generator.trueAmt).round().toString()"
-        :trueAmt="generator.trueAmt.round().toString()"
-        :key="generator.number.round().toString()"
-        :cost="cost('normal', generator.number).toString()"
-        :mult="mult('normal', generator.number).toString()"
+        :number="format(generator.number)"
+        :amt="format(generator.amt.add(generator.trueAmt))"
+        :trueAmt="format(generator.trueAmt)"
+        :key="format(generator.number)"
+        :cost="format(cost('normal', generator.number))"
+        :mult="format(mult('normal', generator.number))"
       ></normal-generator></div>`
 })
 
@@ -21,7 +22,7 @@ app.component("normal-generator", {
     amt: String,
     cost: String,
     mult: String,
-    trueAmt: String
+    trueAmt: String,
   },
   template: `<button style="display:block;" :number="number" onclick='player.buy("normal", this.attributes.number.value)'>
   <b>Generator {{number}}</b><br>
