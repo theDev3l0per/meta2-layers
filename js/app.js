@@ -50,10 +50,13 @@ var app = Vue.createApp({
       }
     },
     cost(type, distinct) {
-      return Decimal.pow(10, distinct).pow(this[`${type}Generators`][distinct-1].amt.add(1))
+      return Decimal.pow(10, distinct).pow(this[`${type}Generators`][distinct-1].amt.add(1)).round()
     },
-    b() {
-      alert("hi")
+    buy(type, distinct) {
+      if (type == "normal" && this.a.gte(this.cost(type, distinct))) {
+        this.a = this.a.sub(this.cost(type, distinct))
+        this[`${type}Generators`][distinct-1].amt = this[`${type}Generators`][distinct-1].amt.add(1).round()
+      }
     }
   }
 })
