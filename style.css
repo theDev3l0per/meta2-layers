@@ -21,6 +21,7 @@ normal-generators {
   padding: 20px 50px;
   margin: auto;
 }
+
 .button {
   background-color: #000000;
   color: #ffffff;
@@ -34,7 +35,15 @@ normal-generators {
 }
 
 .nGenDupe {
-  width: 70vh;
-  height: 20vh;
+  width: 30vw;
+  height: 14vh;
   margin: auto;
+  text-align: center;
+  font-size: 2vh;
+}
+
+#maxall {
+  width: 15vw;
+  height: 4vh;
+  font-size: 1vw;
 }

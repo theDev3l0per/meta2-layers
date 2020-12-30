@@ -5,6 +5,7 @@ body {
   margin: 1em;
   background-color: #ffffff;
   color: #000000;
+  text-align: center;
 }
 
 button {
@@ -17,14 +18,14 @@ normal-generators {
   background-color: #ffffff;
   color: #000000;
   text-align: center;
-  margin: auto;
   padding: 20px 50px;
+  margin: auto;
 }
+
 .button {
   background-color: #ffffff;
   color: #000000;
   text-align: center;
-  margin: auto;
   transition-duration: 0.5s;
 }
 
@@ -34,7 +35,15 @@ normal-generators {
 }
 
 .nGenDupe {
-  width: 70vh;
-  height: 20vh;
+  width: 30vw;
+  height: 14vh;
   margin: auto;
+  text-align: center;
+  font-size: 2vh;
+}
+
+#maxall {
+  width: 15vw;
+  height: 4vh;
+  font-size: 1vw;
 }

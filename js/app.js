@@ -2,6 +2,7 @@ const $ = id => document.getElementById(id)
 const c = id => document.getElementsByClassName(id)
 const t = id => document.getElementsByTagName(id)
 const D = id => new Decimal(id)
+var player
 
 function loopAssign(x, y) {
   
@@ -39,17 +40,33 @@ var app = Vue.createApp({
     dark: true,
     tab: "1",
     normalGenerators: [],
-    dngCap: D(5),
+    normalDupes: D(0),
     a: D(10)
     }
     if (typeof localStorage.layers != "undefined") x = decimalize(loopAssign(x, JSON.parse(localStorage.layers)))
     return x
   },
   methods: {
+    maxAll() {
+        for (var i in this.normalGenerators) {
+          i = Number(i)
+          while (true) {
+           var canBuy = this.buy("normal", i+1)
+           if (!canBuy) break
+          }
+        }
+      },
+    dngCap() {return D(5).add(this.normalDupes)},
     createGenerators() {
-      for (var i = D(1); i.lte(this.dngCap); i = i.add(1)) {
+      for (var i = D(1); i.lte(this.dngCap()); i = i.add(1)) {
         this.normalGenerators.push({number: i.round(), amt: D(0).round(), trueAmt: D(0).round()})
       }
+    },
+    canNormalDupe() {
+      var distinct = D(5).add(this.normalDupes)
+      if (!this.normalGenerators[distinct.toNumber()-1]) return
+      //var amt = D(5).times(Decimal.pow(2, this.normalDupes))
+      return this.normalGenerators[distinct.toNumber()-1].trueAmt.gte(distinct)
     },
     cost(type, distinct) {
       return Decimal.pow(10, distinct).pow(this[`${type}Generators`][distinct-1].trueAmt.add(1)).round()
@@ -58,10 +75,12 @@ var app = Vue.createApp({
       if (type == "normal" && this.a.gte(this.cost(type, distinct))) {
         this.a = this.a.sub(this.cost(type, distinct))
         this[`${type}Generators`][distinct-1].trueAmt = this[`${type}Generators`][distinct-1].trueAmt.add(1).round()
+        return true
       }
+      else return false
     },
     mult(type, distinct) {
-      return Decimal.pow(2, this[`${type}Generators`][distinct-1].trueAmt).round()
+      return Decimal.pow(2, this[`${type}Generators`][distinct-1].trueAmt).times(Decimal.pow(1.1, this.normalDupes)).times(this.tickspeed())
     },
     format(decimal, precision=2,) {
       decimal = new Decimal(decimal)
@@ -77,6 +96,9 @@ var app = Vue.createApp({
       else if (decimal.gte(1e9)) return exponentialFormat(decimal, precision)
       else if (decimal.gte(1e3)) return commaFormat(decimal, 0)
       else return regularFormat(decimal, precision)
+    },
+    tickspeed() {
+      return new Decimal(1/20).times(Decimal.pow(1.1, this.normalDupes))
     }
   }
 })
@@ -86,19 +108,27 @@ function init() {
   if (typeof localStorage.layers == "undefined") player.createGenerators()
   setInterval(save, 10000)
   setInterval(tick, 50)
+  window.addEventListener("keypress",function(keyp){
+    let key = keyp.key.toLowerCase()
+    if(key=="m"){
+      player.maxAll()
+    }
+    if(key=="d"){
+      if(player.canNormalDupe())normalDupe()
+    } // nice
+},false)
 }
 
 function tick() {
-  player.a = player.normalGenerators[0].amt.add(player.normalGenerators[0].trueAmt).times(Decimal.pow(2, player.normalGenerators[0].trueAmt)).div(20).add(player.a)
+  player.a = player.normalGenerators[0].amt.add(player.normalGenerators[0].trueAmt).times(player.mult("normal", 1)).add(player.a)
   for (var i in player.normalGenerators) {
     i = Number(i)
-    if (D(i).neq(player.dngCap.sub(1))) {
-      player.normalGenerators[i].amt = player.normalGenerators[i+1].amt.add(player.normalGenerators[i+1].trueAmt).times(Decimal.pow(2, player.normalGenerators[i+1].trueAmt)).div(20).add(player.normalGenerators[i].amt)
+    if (D(i).neq(player.dngCap().sub(1))) {
+      player.normalGenerators[i].amt = player.normalGenerators[i+1].amt.add(player.normalGenerators[i+1].trueAmt).times(player.mult("normal", i+2)).add(player.normalGenerators[i].amt)
     }
   }
 }
-
-function exponentialFormat(num, precision, mantissa = true) {
+function exponentialFormat(num, precision, mantissa = true) { // the one you pasted here
 	let e = num.log10().floor()
 	let m = num.div(Decimal.pow(10, e))
 	if(m.toStringWithDecimalPlaces(precision) == 10) {
@@ -110,7 +140,6 @@ function exponentialFormat(num, precision, mantissa = true) {
 		return m.toStringWithDecimalPlaces(precision)+"e"+e
 		else return "e"+e
 	}
-
 function commaFormat(num, precision) {
 	if (num === null || num === undefined) return "NaN"
 	if (num.mag < 0.001) return (0).toFixed(precision)
@@ -121,4 +150,11 @@ function regularFormat(num, precision) {
 	if (num === null || num === undefined) return "NaN"
 	if (num.mag < 0.001) return (0).toFixed(precision)
 	return num.toStringWithDecimalPlaces(precision)
+}
+
+function normalDupe() {
+  player.a = D(10)
+  player.normalGenerators = []
+  player.normalDupes = player.normalDupes.add(1).round()
+  player.createGenerators()
 }

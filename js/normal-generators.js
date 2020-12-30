@@ -12,7 +12,7 @@ app.component("normal-generators", {
         :trueAmt="format(generator.trueAmt)"
         :key="format(generator.number)"
         :cost="format(cost('normal', generator.number))"
-        :mult="format(mult('normal', generator.number))"
+        :mult="format(mult('normal', generator.number).times(20))"
       ></normal-generator></div>`
 })
 
