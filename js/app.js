@@ -51,6 +51,9 @@ var app = Vue.createApp({
     },
     cost(type, distinct) {
       return Decimal.pow(10, distinct).pow(this[`${type}Generators`][distinct-1].amt.add(1))
+    },
+    b() {
+      alert("hi")
     }
   }
 })
