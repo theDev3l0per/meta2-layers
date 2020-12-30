@@ -22,6 +22,10 @@
       </div>
       <div v-if="tab.toString() == '1'">
         <h3>You have <b>{{format(a)}}</b>a.</h3>
+        <button class="nGenDupe" v-if="false">
+          <h3>Generator Duplication</h3>
+          Reset the game but unlock a new generator and all generators and tickspeed gain a 1.1x buff
+        </button>
         <normal-generators
           :generators="normalGenerators"
           :cost="cost"
@@ -34,7 +38,8 @@
           Theme
         </button><br>
         <b>Credits</b><br>unpingabot for making 99% of the code<br>unp©gged™ for game ideas
-        <b>Changelog</b><br>
+        <h1>Changelog</h1>
+        <h3>v1.00</h3>Created the entire game.
       </div>
       <link rel="stylesheet" :href="dark ? 'style.css' : 'style1.css'" />
     </div>

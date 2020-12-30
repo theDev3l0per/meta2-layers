@@ -30,7 +30,7 @@ function decimalize(x) { // imma continue working
 }
 
 function save() {
-  localStorage.game = JSON.stringify(player.$data)
+  localStorage.layers = JSON.stringify(player.$data)
 }
 
 var app = Vue.createApp({
@@ -42,7 +42,7 @@ var app = Vue.createApp({
     dngCap: D(5),
     a: D(10)
     }
-    if (typeof localStorage.game != "undefined") x = decimalize(loopAssign(x, JSON.parse(localStorage.game)))
+    if (typeof localStorage.layers != "undefined") x = decimalize(loopAssign(x, JSON.parse(localStorage.layers)))
     return x
   },
   methods: {
@@ -83,7 +83,7 @@ var app = Vue.createApp({
 
 function init() {
   player = app.mount("#app")
-  if (typeof localStorage.game == "undefined") player.createGenerators()
+  if (typeof localStorage.layers == "undefined") player.createGenerators()
   setInterval(save, 10000)
   setInterval(tick, 50)
 }
