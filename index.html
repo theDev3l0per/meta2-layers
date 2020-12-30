@@ -1,43 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <title>(Meta^Meta) Layers</title>    
+    <title>(Meta^Meta) Layers</title>
 
-    <link rel="stylesheet" href="/style.css">
-  </head>  
+    
+  </head>
   <body>
     <!-- Non-game Scripts -->
     <script src="break_eternity.min.js"></script>
     <script src="https://unpkg.com/vue@next"></script>
-    
+
     <!-- Html -->
     <div id="app">
       <div id="tabs">
-        <button :onclick="tab=1">
-          Main
-        </button>
-        <button :onclick="tab=2">
-          Not Main
-        </button>
+        <button onclick="player.tab='1'">Production</button>
+        <button onclick="player.tab='2'">Settings</button>
       </div>
       <div v-if="tab.toString() == '1'">
-        <h3>
-        You have <b>{{a.toFixed(2)}}</b>a.
-      </h3>
-      <normal-generators :generators="normalGenerators" :cost="cost"></normal-generators>
+        <h3>You have <b>{{a.toFixed(2)}}</b>a.</h3>
+        <normal-generators
+          :generators="normalGenerators"
+          :cost="cost"
+        ></normal-generators>
       </div>
-      
+      <div v-if="tab.toString() == '2'">
+        <button onclick="player.dark = !player.dark">
+          Theme
+        </button><br>
+        <b>Credits</b><br>
+        unpingabot for making 99% of the code unp©gged™ for game ideas
+      </div>
+      <link rel="stylesheet" :href="dark ? 'style.css' : 'style1.css'" />
     </div>
-    
-    
+    <!-- Nothing past here -->
+
     <!-- Game Scripts -->
     <script src="js/app.js"></script>
-    <script src="js/generators.js"></script>
+    <script src="js/normal-generators.js"></script>
     <script src="js/save.js"></script>
-    <script>init()</script>
+    <script>
+      init();
+    </script>
   </body>
 </html>
