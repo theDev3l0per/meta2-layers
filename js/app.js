@@ -48,16 +48,16 @@ var app = Vue.createApp({
   methods: {
     createGenerators() {
       for (var i = D(1); i.lte(this.dngCap); i = i.add(1)) {
-        this.normalGenerators.push({number: i.round(), amt: D(0).round()})
+        this.normalGenerators.push({number: i.round(), amt: D(0).round(), trueAmt: D(0).round()})
       }
     },
     cost(type, distinct) {
-      return Decimal.pow(10, distinct).pow(this[`${type}Generators`][distinct-1].amt.add(1)).round()
+      return Decimal.pow(10, distinct).pow(this[`${type}Generators`][distinct-1].trueAmt.add(1)).round()
     },
     buy(type, distinct) {
       if (type == "normal" && this.a.gte(this.cost(type, distinct))) {
         this.a = this.a.sub(this.cost(type, distinct))
-        this[`${type}Generators`][distinct-1].amt = this[`${type}Generators`][distinct-1].amt.add(1).round()
+        this[`${type}Generators`][distinct-1].trueAmt = this[`${type}Generators`][distinct-1].trueAmt.add(1).round()
       }
     },
   }
@@ -71,10 +71,11 @@ function init() {
 }
 
 function tick() {
-  player.a = D(1).div(20).add(player.a)
+  player.a = player.normalGenerators[0].amt.add(player.normalGenerators[0].trueAmt).div(20).add(player.a)
   for (var i in player.normalGenerators) {
+    i = Number(i)
     if (D(i).neq(player.dngCap.sub(1))) {
-      player.normalGenerators[i].amt = player.normalGenerators[i+1].amt.div(20).add(player.normalGenerators[i].amt)
+      player.normalGenerators[i].amt = player.normalGenerators[i+1].amt.add(player.normalGenerators[i+1].trueAmt).div(20).add(player.normalGenerators[i].amt)
     }
   }
 }
